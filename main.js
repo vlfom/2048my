@@ -5,7 +5,6 @@
 var boxes = new Array(0), linkBoxes, prevBoxes ;
 var remState = 1, remStyle = 1 ;
 var idGen = 0 ;
-var linkBoard = document.body.getElementsByClassName("board")[0] ;
 
 function Box( gen, i, j, val )
 {
@@ -35,7 +34,7 @@ function Box( gen, i, j, val )
     else if (remState == 3)
         newItem.style.background = "rgb(" + (248 - 8 * logval) + "," + (logval > 5 ? 248 - 8 * (logval - 5) : 248) + "," + (248 - 16 * logval) + ")";
 
-    linkBoard.appendChild( newItem ) ;
+    document.body.getElementsByClassName("board")[0].appendChild( newItem ) ;
 
     this.link = document.getElementById( this.mid ) ;
     /*animation*/
@@ -53,7 +52,7 @@ function Box( gen, i, j, val )
     } ;
 
     this.mdelete = function() {
-        linkBoard.removeChild( this.link ) ;
+        document.body.getElementsByClassName("board")[0].removeChild( this.link ) ;
     } ;
 
     return this ;
@@ -147,24 +146,24 @@ function handleHoriz( sj, fj, dj ) {
 
 function changeCol(state) {
     remState = state ;
-    for( var i = 0 ; i < boxes.length ; ++i ) {
-        var logval = boxes[i].value ? Math.log(boxes[i].value) / Math.log(2) : 0;
+    for( i = 0 ; i < boxes.length ; ++i ){
+        var logval = boxes[i].value?Math.log(boxes[i].value)/Math.log(2):0 ;
         if (state == 1)
-            boxes[i].link.style.background = "rgb(" + (248 - 12 * logval) + "," + (248 - 12 * logval) + "," + (logval > 5 ? 248 - 12 * (logval - 5) : 248) + ")";
+            document.getElementById(boxes[i].mid).style.background = "rgb(" + (248 - 12 * logval) + "," +  (248 - 12 * logval) + "," + (logval > 5 ? 248 - 12 * (logval - 5) : 248) + ")";
         else if (state == 2)
-            boxes[i].link.style.background = "rgb(" + (logval > 5 ? 248 - 4 * (logval - 5) : 248) + "," + (248 - 4 * logval) + "," + (logval ? 248 - 16 * logval : 248) + ")";
+            document.getElementById(boxes[i].mid).style.background = "rgb(" + (logval > 5 ? 248 - 4 * (logval - 5) : 248) + "," + (248 - 4 * logval) + "," + (logval?248 - 16 * logval:248) + ")";
         else if (state == 3)
-            boxes[i].link.style.background = "rgb(" + (248 - 8 * logval) + "," + (logval > 5 ? 248 - 8 * (logval - 5) : 248) + "," + (248 - 16 * logval) + ")";
+            document.getElementById(boxes[i].mid).style.background = "rgb(" + (248 - 8 * logval) + "," + (logval > 5 ? 248 - 8 * (logval - 5) : 248) + "," + (248 - 16 * logval) + ")";
     }
     if (state == 1){
         document.body.style.backgroundColor = "lightblue" ;
-        linkBoard.style.backgroundColor = "slateblue" ;
+        document.body.getElementsByClassName("board")[0].style.backgroundColor = "slateblue" ;
     } else if (state == 2){
         document.body.style.backgroundColor = "khaki" ;
-        linkBoard.style.backgroundColor = "gainsboro" ;
+        document.body.getElementsByClassName("board")[0].style.backgroundColor = "gainsboro" ;
     } else if (state == 3){
         document.body.style.backgroundColor = "lightgreen" ;
-        linkBoard.style.backgroundColor = "palegreen" ;
+        document.body.getElementsByClassName("board")[0].style.backgroundColor = "palegreen" ;
     }
 }
 
@@ -172,14 +171,16 @@ function changeCol(state) {
 function changeStyle(state) {
     remStyle = state ;
     if( state == 1 ){
-        //document.body.style.background = "url('assets/images/background-lines-big.png') 0 0 repeat" ;
-        document.body.style.backgroundPosition="15px 0,15px 0,0 0, 0 0" ;
-        document.body.style.backgroundSize="30px 20px" ;
+        document.body.style.background = "url('assets/images/background-bluelines-small.png') 0 0 repeat" ;
+        document.body.style.backgroundSize = "400px 400px" ;
+        //document.body.style.backgroundPosition="15px 0,15px 0,0 0, 0 0" ;
+        //document.body.style.backgroundSize="30px 20px" ;
     }
     else if( state == 2 ){
-        //document.body.style.background = "url('assets/images/background-squares-big.png') 0 0 repeat" ;
-        document.body.style.backgroundPosition="0 0" ;
-        document.body.style.backgroundSize="10px 10px" ;
+        document.body.style.background = "url('assets/images/background-bluesquares-small.png') 0 0 repeat" ;
+        document.body.style.backgroundSize = "500px 500px" ;
+        //document.body.style.backgroundPosition="0 0" ;
+        //document.body.style.backgroundSize="10px 10px" ;
     }
 }
 
@@ -232,10 +233,10 @@ function RestartGame() {
     turnAppear(2);
     turnAppear(2);
     setKeysHandle();
-    changeStyle(remStyle);
-    changeCol(remState);
     document.getElementsByClassName("board-go")[0].style.display = "none" ;
     document.getElementsByClassName("alert-go")[0].style.display = "none" ;
 }
 
+changeStyle(remStyle);
+changeCol(remState);
 RestartGame();
