@@ -169,11 +169,11 @@ body {
 @-webkit-keyframes appear {
     0% {
         opacity: 0.4;
-        -webkit-transform: scale(0.5);
-        -moz-transform: scale(0.5);
-        -ms-transform: scale(0.5);
-        -o-transform: scale(0.5);
-        transform: scale(0.5);
+        -webkit-transform: scale(0.6);
+        -moz-transform: scale(0.6);
+        -ms-transform: scale(0.6);
+        -o-transform: scale(0.6);
+        transform: scale(0.6);
     }
     50% {
         opacity: 0.5;
@@ -203,11 +203,11 @@ body {
 @-moz-keyframes appear {
     0% {
         opacity: 0.4;
-        -webkit-transform: scale(0.5);
-        -moz-transform: scale(0.5);
-        -ms-transform: scale(0.5);
-        -o-transform: scale(0.5);
-        transform: scale(0.5);
+        -webkit-transform: scale(0.6);
+        -moz-transform: scale(0.6);
+        -ms-transform: scale(0.6);
+        -o-transform: scale(0.6);
+        transform: scale(0.6);
     }
     50% {
         opacity: 0.5;
@@ -237,11 +237,11 @@ body {
 @-o-keyframes appear {
      0% {
          opacity: 0.4;
-         -webkit-transform: scale(0.5);
-         -moz-transform: scale(0.5);
-         -ms-transform: scale(0.5);
-         -o-transform: scale(0.5);
-         transform: scale(0.5);
+         -webkit-transform: scale(0.6);
+         -moz-transform: scale(0.6);
+         -ms-transform: scale(0.6);
+         -o-transform: scale(0.6);
+         transform: scale(0.6);
      }
      50% {
          opacity: 0.5;
@@ -271,11 +271,11 @@ body {
 @keyframes appear {
     0% {
         opacity: 0.4 ;
-        -webkit-transform: scale(0.5);
-        -moz-transform: scale(0.5);
-        -ms-transform: scale(0.5);
-        -o-transform: scale(0.5);
-        transform: scale(0.5);
+        -webkit-transform: scale(0.6);
+        -moz-transform: scale(0.6);
+        -ms-transform: scale(0.6);
+        -o-transform: scale(0.6);
+        transform: scale(0.6);
     }
     50% {
         opacity: 0.5 ;
@@ -313,7 +313,7 @@ form {
     height:30px;
     margin-bottom:10px;
     border-radius:10px;
-    opacity:0.8;
+    opacity:0.7;
 }
 a{
     text-decoration:none;
@@ -324,21 +324,25 @@ a{
     line-height:30px;
     outline:none;
     cursor:default;
+    color: dimgray ;
+    background: whitesmoke ;
+    border: 2px solid lightgray ;
 }
 a:hover {
+    color: dimgray ;
     text-decoration: none;
 }
 .blue{
-    color:blue;
-    border:2px solid blue;
+    color:darkslateblue;
+    border:2px solid cornflowerblue;
     background:lightblue;
 }
 a.blue:hover{
-    color:blue;
+    color:darkslateblue;
 }
 .green{
     color:green;
-    border:2px solid green;
+    border:2px solid limegreen;
     background:lightgreen;
 }
 a.green:hover{
@@ -346,7 +350,7 @@ a.green:hover{
 }
 .red{
     color:saddlebrown;
-    border:2px solid saddlebrown;
+    border:2px solid indianred;
     background:darksalmon;
 }
 a.red:hover {
@@ -389,7 +393,12 @@ button, button:active{
 .button-prev{
     background:lightgray;
     margin:2px 0 0 2px ;
-    padding-right:20px;
+    padding-right: 15px;
+    opacity: 0.3;
+}
+.button-prev:hover {
+    padding-right: 15px;
+    opacity: 0.3;
 }
 button:hover .rel-icon{
     transition: all 1s ease-in-out;
