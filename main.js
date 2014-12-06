@@ -188,23 +188,18 @@ function changeStyle(state) {
     }
 }
 
-var lastClick = 0, curClick ;
 function setKeysHandle(){
     document.onkeydown = function(e){
-        curClick = new Date ;
-        if( curClick - lastClick > 50 ) {
-            lastClick = curClick ;
-            if (e.keyCode == 37)
-                handleHoriz(0, 4, 1);
-            else if (e.keyCode == 38)
-                handleVert(0, 4, 1);
-            else if (e.keyCode == 39)
-                handleHoriz(3, -1, -1);
-            else if (e.keyCode == 40)
-                handleVert(3, -1, -1);
-            if( !handleHoriz(0, 4, 1, 1) && !handleHoriz(3, -1, -1, 1) && !handleVert(0, 4, 1, 1) && !handleVert(3, -1, -1, 1) )
-                gameOver() ;
-        }
+        if (e.keyCode == 37)
+            handleHoriz(0, 4, 1);
+        else if (e.keyCode == 38)
+            handleVert(0, 4, 1);
+        else if (e.keyCode == 39)
+            handleHoriz(3, -1, -1);
+        else if (e.keyCode == 40)
+            handleVert(3, -1, -1);
+        if( !handleHoriz(0, 4, 1, 1) && !handleHoriz(3, -1, -1, 1) && !handleVert(0, 4, 1, 1) && !handleVert(3, -1, -1, 1) )
+            gameOver() ;
     }
 }
 

@@ -123,10 +123,10 @@ body {
     cursor: default ;
 }
 .td {
-    -webkit-transition: 50ms linear ;
-    -moz-transition: 50ms linear ;
-    -o-transition: 50ms linear ;
-    transition: 50ms linear ;
+    -webkit-transition: 150ms linear ;
+    -moz-transition: 150ms linear ;
+    -o-transition: 150s linear ;
+    transition: 150ms linear ;
     font-family: 'ClearSans', sans-serif;
     font-size: 25px ; font-weight: 200 ;
     position: absolute ; top: 0 ; left: 0 ;
@@ -143,6 +143,10 @@ body {
     -moz-animation-fill-mode: both;
     -o-animation-fill-mode: both;
     animation-fill-mode: both;
+    -webkit-animation-timing-function: ease-in-out;
+    -moz-animation-timing-function: ease-in-out;
+    -o-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
 }
 @keyframes appear {
     0% {
