@@ -31,7 +31,7 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    font-family: 'ClearSans';
+    font-family: 'ClearSans', sans-serif;
     min-width:800px;
     min-height:400px;
     width:100%;
@@ -52,7 +52,7 @@ body {
     position:relative;
 }
 .title{
-    font-family: 'ClearSans';
+    font-family: 'ClearSans', sans-serif;
     font-weight:500 ;
     padding:10px;
     position: absolute;
@@ -73,7 +73,7 @@ body {
     font-size:20px ;
     color:purple ;
 }
-.board, .board-ghost {
+.board, .board-ghost, .board-go {
     width: 280px ; height: 280px ;
     display: block ;
     position: absolute ;
@@ -93,6 +93,23 @@ body {
 }
 .board-ghost {
     z-index: 1 ;
+}
+.board-go {
+    z-index: 3 ;
+    background: whitesmoke ;
+    opacity: 0.7 ;
+    border-radius: 2% ;
+    display: none ;
+}
+.alert-go {
+    z-index: 3 ;
+    position: absolute ;
+    top: 50% ; left: 50% ;
+    margin: -36px auto auto -101px ;
+    font-size: 40px ;
+    text-shadow: 1px 1px 3px white ;
+    cursor: default ;
+    display: none ;
 }
 .field, .field-ghost {
     width: 260px ; height: 260px ;

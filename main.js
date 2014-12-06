@@ -218,8 +218,9 @@ function undoAct()
 }
 
 function gameOver() {
-    alert("Game Over!");
-    document.onkeypress = undefined;
+    document.onkeydown = undefined;
+    document.getElementsByClassName("board-go")[0].style.display = "block" ;
+    document.getElementsByClassName("alert-go")[0].style.display = "block" ;
 }
 
 function RestartGame() {
@@ -239,6 +240,8 @@ function RestartGame() {
     setKeysHandle();
     changeStyle(remStyle);
     changeCol(remState);
+    document.getElementsByClassName("board-go")[0].style.display = "none" ;
+    document.getElementsByClassName("alert-go")[0].style.display = "none" ;
 }
 
 RestartGame();
