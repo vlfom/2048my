@@ -5,6 +5,7 @@
 var boxes = new Array(0), linkBoxes, prevBoxes ;
 var remState = 1, remStyle = 1 ;
 var idGen = 0 ;
+var linkBoard = document.getElementById("board") ;
 
 function Box( gen, i, j, val )
 {
@@ -34,7 +35,7 @@ function Box( gen, i, j, val )
     else if (remState == 3)
         newItem.style.background = "rgb(" + (248 - 8 * logval) + "," + (logval > 5 ? 248 - 8 * (logval - 5) : 248) + "," + (248 - 16 * logval) + ")";
 
-    document.body.getElementsByClassName("board")[0].appendChild( newItem ) ;
+    linkBoard.appendChild( newItem ) ;
 
     this.link = document.getElementById( this.mid ) ;
     /*animation*/
@@ -52,7 +53,7 @@ function Box( gen, i, j, val )
     } ;
 
     this.mdelete = function() {
-        document.body.getElementsByClassName("board")[0].removeChild( this.link ) ;
+        linkBoard.removeChild( this.link ) ;
     } ;
 
     return this ;
@@ -149,21 +150,21 @@ function changeCol(state) {
     for( i = 0 ; i < boxes.length ; ++i ){
         var logval = boxes[i].value?Math.log(boxes[i].value)/Math.log(2):0 ;
         if (state == 1)
-            document.getElementById(boxes[i].mid).style.background = "rgb(" + (248 - 12 * logval) + "," +  (248 - 12 * logval) + "," + (logval > 5 ? 248 - 12 * (logval - 5) : 248) + ")";
+            this.link.style.background = "rgb(" + (248 - 12 * logval) + "," +  (248 - 12 * logval) + "," + (logval > 5 ? 248 - 12 * (logval - 5) : 248) + ")";
         else if (state == 2)
-            document.getElementById(boxes[i].mid).style.background = "rgb(" + (logval > 5 ? 248 - 4 * (logval - 5) : 248) + "," + (248 - 4 * logval) + "," + (logval?248 - 16 * logval:248) + ")";
+            this.link.style.background = "rgb(" + (logval > 5 ? 248 - 4 * (logval - 5) : 248) + "," + (248 - 4 * logval) + "," + (logval?248 - 16 * logval:248) + ")";
         else if (state == 3)
-            document.getElementById(boxes[i].mid).style.background = "rgb(" + (248 - 8 * logval) + "," + (logval > 5 ? 248 - 8 * (logval - 5) : 248) + "," + (248 - 16 * logval) + ")";
+            this.link.style.background = "rgb(" + (248 - 8 * logval) + "," + (logval > 5 ? 248 - 8 * (logval - 5) : 248) + "," + (248 - 16 * logval) + ")";
     }
     if (state == 1){
         document.body.style.backgroundColor = "lightblue" ;
-        document.body.getElementsByClassName("board")[0].style.backgroundColor = "slateblue" ;
+        linkBoard.style.backgroundColor = "slateblue" ;
     } else if (state == 2){
         document.body.style.backgroundColor = "khaki" ;
-        document.body.getElementsByClassName("board")[0].style.backgroundColor = "gainsboro" ;
+        linkBoard.style.backgroundColor = "gainsboro" ;
     } else if (state == 3){
         document.body.style.backgroundColor = "lightgreen" ;
-        document.body.getElementsByClassName("board")[0].style.backgroundColor = "palegreen" ;
+        linkBoard.style.backgroundColor = "palegreen" ;
     }
 }
 
@@ -214,8 +215,8 @@ function checkGameOver() {
 
 function gameOver() {
     document.onkeydown = undefined;
-    document.getElementsByClassName("board-go")[0].style.display = "block" ;
-    document.getElementsByClassName("alert-go")[0].style.display = "block" ;
+    document.getElementById("board-go").style.display = "block" ;
+    document.getElementById("alert-go").style.display = "block" ;
 }
 
 function RestartGame() {
@@ -233,8 +234,8 @@ function RestartGame() {
     turnAppear(2);
     turnAppear(2);
     setKeysHandle();
-    document.getElementsByClassName("board-go")[0].style.display = "none" ;
-    document.getElementsByClassName("alert-go")[0].style.display = "none" ;
+    document.getElementById("board-go").style.display = "none" ;
+    document.getElementById("alert-go").style.display = "none" ;
 }
 
 changeStyle(remStyle);
