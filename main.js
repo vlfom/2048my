@@ -2,28 +2,9 @@
  * Created by Владимир on 15.11.2014.
  */
 
-var boxes = new Array(0), linkBoxes, prevBoxes, arrLink ;
+var boxes = new Array(0), linkBoxes, prevBoxes ;
 var remState = 1, remStyle = 1 ;
 var idGen = 0 ;
-
-(function(){
-    arrLink = new Array(4) ;
-    for( var i = 0 ; i < 4 ; ++i )
-        arrLink[i] = new Array(4) ;
-})() ;
-
-function Link(x,y,value,ncreate)
-{
-    this.x = x ;
-    this.y = y ;
-    this.value = value ;
-    this.ncreate = ncreate ;
-    this.created = 0 ;
-}
-
-function addAnimation(i,j){
-    //
-}
 
 function Box( gen, i, j, val )
 {
@@ -91,7 +72,7 @@ function turnAppear(val)
     linkBoxes[i][j] = boxes[ boxes.length - 1 ] ;
 }
 
-function handleVert( si, fi, di ) {
+function handleVert( si, fi, di, toCheck ) {
     var something = 0 ;
     for( var j = 0 ; j < 4 ; ++j ) {
         var lasti = undefined, lastei = undefined;
@@ -101,6 +82,7 @@ function handleVert( si, fi, di ) {
             else if (lastei == undefined && !linkBoxes[i][j]) //(2)
                 lastei = i;
             else if (lasti != undefined && linkBoxes[i][j] && linkBoxes[lasti][j].value == linkBoxes[i][j].value) { //(3)
+                if( toCheck ) return 1 ;
                 boxes.splice(boxes.indexOf(linkBoxes[lasti][j]), 1);
                 linkBoxes[lasti][j].mdelete();
                 delete linkBoxes[lasti][j];
@@ -114,6 +96,7 @@ function handleVert( si, fi, di ) {
                 something = 1;
             }
             else if (lastei != undefined && linkBoxes[i][j]) { //4
+                if( toCheck ) return 1 ;
                 linkBoxes[i][j].mupdate(j, lastei);
                 linkBoxes[lastei][j] = linkBoxes[i][j] ;
                 delete linkBoxes[i][j] ;
@@ -125,9 +108,10 @@ function handleVert( si, fi, di ) {
     }
     if( something )
         turnAppear() ;
+    return 0 ;
 }
 
-function handleHoriz( sj, fj, dj ) {
+function handleHoriz( sj, fj, dj, toCheck ) {
     var something = 0 ;
     for( var i = 0 ; i < 4 ; ++i ) {
         var lastj = undefined, lastej = undefined;
@@ -137,6 +121,7 @@ function handleHoriz( sj, fj, dj ) {
             else if (lastej == undefined && !linkBoxes[i][j]) //(2)
                 lastej = j;
             else if (lastj != undefined && linkBoxes[i][j] && linkBoxes[i][lastj].value == linkBoxes[i][j].value) { //(3)
+                if( toCheck ) return 1 ;
                 boxes.splice(boxes.indexOf(linkBoxes[i][lastj]), 1);
                 linkBoxes[i][lastj].mdelete();
                 delete linkBoxes[i][lastj];
@@ -150,6 +135,7 @@ function handleHoriz( sj, fj, dj ) {
                 something = 1;
             }
             else if (lastej != undefined && linkBoxes[i][j]) { //4
+                if( toCheck ) return 1 ;
                 linkBoxes[i][j].mupdate(lastej, i);
                 linkBoxes[i][lastej] = linkBoxes[i][j] ;
                 delete linkBoxes[i][j] ;
@@ -161,6 +147,7 @@ function handleHoriz( sj, fj, dj ) {
     }
     if( something )
         turnAppear() ;
+    return 0 ;
 }
 
 function changeCol(state) {
@@ -215,8 +202,8 @@ function setKeysHandle(){
                 handleHoriz(3, -1, -1);
             else if (e.keyCode == 40)
                 handleVert(3, -1, -1);
-            /*if( !handleHoriz(0, 4, 1, 1) && !handleHoriz(3, -1, -1, 1) && !handleVert(0, 4, 1, 1) && !handleVert(3, -1, -1, 1) )
-                gameOver() ;*/
+            if( !handleHoriz(0, 4, 1, 1) && !handleHoriz(3, -1, -1, 1) && !handleVert(0, 4, 1, 1) && !handleVert(3, -1, -1, 1) )
+                gameOver() ;
         }
     }
 }
@@ -235,14 +222,14 @@ function undoAct()
     */
 }
 
-function gameOver(){
-    alert( "Game Over!" ) ;
-    document.onkeypress = undefined ;
+function gameOver() {
+    alert("Game Over!");
+    document.onkeypress = undefined;
 }
 
-function RestartGame(){
-    prevBoxes = undefined ;
-    while( boxes.length ) {
+function RestartGame() {
+    prevBoxes = undefined;
+    while (boxes.length) {
         boxes[0].mdelete();
         boxes.shift();
     }
@@ -252,7 +239,8 @@ function RestartGame(){
         for (var j = 0; j < 4; ++j)
             linkBoxes[i][j] = null;
     }
-    turnAppear(2) ; turnAppear(2) ;
+    turnAppear(2);
+    turnAppear(2);
     setKeysHandle();
     changeStyle(remStyle);
     changeCol(remState);
