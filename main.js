@@ -192,7 +192,7 @@ var lastClick = 0, curClick ;
 function setKeysHandle(){
     document.onkeydown = function(e){
         curClick = new Date ;
-        if( curClick - lastClick > 100 ) {
+        if( curClick - lastClick > 50 ) {
             lastClick = curClick ;
             if (e.keyCode == 37)
                 handleHoriz(0, 4, 1);
