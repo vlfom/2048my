@@ -5,6 +5,7 @@
 var boxes = new Array(0), linkBoxes, prevBoxes ;
 var remState = 1, remStyle = 1 ;
 var idGen = 0 ;
+var linkBoard = document.body.getElementsByClassName("board")[0] ;
 
 function Box( gen, i, j, val )
 {
@@ -34,26 +35,25 @@ function Box( gen, i, j, val )
     else if (remState == 3)
         newItem.style.background = "rgb(" + (248 - 8 * logval) + "," + (logval > 5 ? 248 - 8 * (logval - 5) : 248) + "," + (248 - 16 * logval) + ")";
 
-    document.body.getElementsByClassName("board")[0].appendChild( newItem ) ;
+    linkBoard.appendChild( newItem ) ;
 
+    this.link = document.getElementById( this.mid ) ;
     /*animation*/
-    var self = this ;
-
     this.mupdate = function(nx,ny) {
-        document.getElementById( this.mid ).classList.remove("t"+(this.x+1)+""+(this.y+1)) ;
-        document.getElementById( this.mid ).classList.add("t"+(nx+1)+""+(ny+1)) ;
+        this.link.classList.remove("t"+(this.x+1)+""+(this.y+1)) ;
+        this.link.classList.add("t"+(nx+1)+""+(ny+1)) ;
         this.x = nx ; this.y = ny ;
     } ;
 
     this.mpushndel = function(nx,ny) {
-        document.getElementById( this.mid ).classList.remove("t"+(this.x+1)+""+(this.y+1)) ;
-        document.getElementById( this.mid ).classList.add("t"+(nx+1)+""+(ny+1)) ;
+        this.link.classList.remove("t"+(this.x+1)+""+(this.y+1)) ;
+        this.link.classList.add("t"+(nx+1)+""+(ny+1)) ;
         this.x = nx ; this.y = ny ;
-        var self = this ; setTimeout( function(){ self.mdelete() ; }, 50 ) ;
+        var self = this ; setTimeout( function(){ self.mdelete() ; }, 100 ) ;
     } ;
 
     this.mdelete = function() {
-        document.body.getElementsByClassName("board")[0].removeChild( document.getElementById( self.mid ) ) ;
+        linkBoard.removeChild( this.link ) ;
     } ;
 
     return this ;
@@ -72,7 +72,7 @@ function turnAppear(val)
     linkBoxes[i][j] = boxes[ boxes.length - 1 ] ;
 }
 
-function handleVert( si, fi, di, toCheck ) {
+function handleVert( si, fi, di ) {
     var something = 0 ;
     for( var j = 0 ; j < 4 ; ++j ) {
         var lasti = undefined, lastei = undefined;
@@ -82,7 +82,6 @@ function handleVert( si, fi, di, toCheck ) {
             else if (lastei == undefined && !linkBoxes[i][j]) //(2)
                 lastei = i;
             else if (lasti != undefined && linkBoxes[i][j] && linkBoxes[lasti][j].value == linkBoxes[i][j].value) { //(3)
-                if( toCheck ) return 1 ;
                 boxes.splice(boxes.indexOf(linkBoxes[lasti][j]), 1);
                 linkBoxes[lasti][j].mdelete();
                 delete linkBoxes[lasti][j];
@@ -96,7 +95,6 @@ function handleVert( si, fi, di, toCheck ) {
                 something = 1;
             }
             else if (lastei != undefined && linkBoxes[i][j]) { //4
-                if( toCheck ) return 1 ;
                 linkBoxes[i][j].mupdate(j, lastei);
                 linkBoxes[lastei][j] = linkBoxes[i][j] ;
                 delete linkBoxes[i][j] ;
@@ -111,7 +109,7 @@ function handleVert( si, fi, di, toCheck ) {
     return 0 ;
 }
 
-function handleHoriz( sj, fj, dj, toCheck ) {
+function handleHoriz( sj, fj, dj ) {
     var something = 0 ;
     for( var i = 0 ; i < 4 ; ++i ) {
         var lastj = undefined, lastej = undefined;
@@ -121,7 +119,6 @@ function handleHoriz( sj, fj, dj, toCheck ) {
             else if (lastej == undefined && !linkBoxes[i][j]) //(2)
                 lastej = j;
             else if (lastj != undefined && linkBoxes[i][j] && linkBoxes[i][lastj].value == linkBoxes[i][j].value) { //(3)
-                if( toCheck ) return 1 ;
                 boxes.splice(boxes.indexOf(linkBoxes[i][lastj]), 1);
                 linkBoxes[i][lastj].mdelete();
                 delete linkBoxes[i][lastj];
@@ -135,7 +132,6 @@ function handleHoriz( sj, fj, dj, toCheck ) {
                 something = 1;
             }
             else if (lastej != undefined && linkBoxes[i][j]) { //4
-                if( toCheck ) return 1 ;
                 linkBoxes[i][j].mupdate(lastej, i);
                 linkBoxes[i][lastej] = linkBoxes[i][j] ;
                 delete linkBoxes[i][j] ;
@@ -147,29 +143,28 @@ function handleHoriz( sj, fj, dj, toCheck ) {
     }
     if( something )
         turnAppear() ;
-    return 0 ;
 }
 
 function changeCol(state) {
     remState = state ;
-    for( i = 0 ; i < boxes.length ; ++i ){
-        var logval = boxes[i].value?Math.log(boxes[i].value)/Math.log(2):0 ;
+    for( var i = 0 ; i < boxes.length ; ++i ) {
+        var logval = boxes[i].value ? Math.log(boxes[i].value) / Math.log(2) : 0;
         if (state == 1)
-            document.getElementById(boxes[i].mid).style.background = "rgb(" + (248 - 12 * logval) + "," +  (248 - 12 * logval) + "," + (logval > 5 ? 248 - 12 * (logval - 5) : 248) + ")";
+            boxes[i].link.style.background = "rgb(" + (248 - 12 * logval) + "," + (248 - 12 * logval) + "," + (logval > 5 ? 248 - 12 * (logval - 5) : 248) + ")";
         else if (state == 2)
-            document.getElementById(boxes[i].mid).style.background = "rgb(" + (logval > 5 ? 248 - 4 * (logval - 5) : 248) + "," + (248 - 4 * logval) + "," + (logval?248 - 16 * logval:248) + ")";
+            boxes[i].link.style.background = "rgb(" + (logval > 5 ? 248 - 4 * (logval - 5) : 248) + "," + (248 - 4 * logval) + "," + (logval ? 248 - 16 * logval : 248) + ")";
         else if (state == 3)
-            document.getElementById(boxes[i].mid).style.background = "rgb(" + (248 - 8 * logval) + "," + (logval > 5 ? 248 - 8 * (logval - 5) : 248) + "," + (248 - 16 * logval) + ")";
+            boxes[i].link.style.background = "rgb(" + (248 - 8 * logval) + "," + (logval > 5 ? 248 - 8 * (logval - 5) : 248) + "," + (248 - 16 * logval) + ")";
     }
     if (state == 1){
         document.body.style.backgroundColor = "lightblue" ;
-        document.body.getElementsByClassName("board")[0].style.backgroundColor = "slateblue" ;
+        linkBoard.style.backgroundColor = "slateblue" ;
     } else if (state == 2){
         document.body.style.backgroundColor = "khaki" ;
-        document.body.getElementsByClassName("board")[0].style.backgroundColor = "gainsboro" ;
+        linkBoard.style.backgroundColor = "gainsboro" ;
     } else if (state == 3){
         document.body.style.backgroundColor = "lightgreen" ;
-        document.body.getElementsByClassName("board")[0].style.backgroundColor = "palegreen" ;
+        linkBoard.style.backgroundColor = "palegreen" ;
     }
 }
 
@@ -198,23 +193,22 @@ function setKeysHandle(){
             handleHoriz(3, -1, -1);
         else if (e.keyCode == 40)
             handleVert(3, -1, -1);
-        if( !handleHoriz(0, 4, 1, 1) && !handleHoriz(3, -1, -1, 1) && !handleVert(0, 4, 1, 1) && !handleVert(3, -1, -1, 1) )
-            gameOver() ;
+        checkGameOver() ;
     }
 }
 
 function undoAct()
 {
-    /*if( prevBoxes ) {
-        for( i = 0 ; i < 4 ; ++i ){
-            for( j = 0 ; j < 4 ; ++j ){
-                boxes[i][j] = new Box(3,i,j,prevBoxes[i][j].value);
-            }
-        }
-        prevBoxes = undefined ;
-    }
-    setKeysHandle();
-    */
+}
+
+function checkGameOver() {
+    for( var i = 0 ; i < 4 ; ++i )
+        for( var j = 0 ; j < 4 ; ++j )
+            if( !linkBoxes[i][j] ||
+                (i && linkBoxes[i][j] && linkBoxes[i-1][j] && linkBoxes[i][j].value == linkBoxes[i-1][j].value) ||
+                (j && linkBoxes[i][j] && linkBoxes[i][j-1] && linkBoxes[i][j].value == linkBoxes[i][j-1].value) )
+            return ;
+    gameOver() ;
 }
 
 function gameOver() {
