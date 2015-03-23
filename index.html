@@ -2,72 +2,74 @@
 
 <html>
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="main.css" />
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <title>2048 my</title>
-</head>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" type="text/css" href="main.css"/>
+        <script src="jquery/jquery-1.11.2.min.js"></script>
+        <title>2048 my</title>
+    </head>
 
-<body>
-    <div class="content">
-        <form>
-            <a href="#" id="blue" class="button blue" onClick="changeCol(1)" ondragstart="return false;">Blue</a>
-            <a href="#" id="red" class="button red" onClick="changeCol(2)" ondragstart="return false;">Red</a>
-            <a href="#" id="green" class="button green" onClick="changeCol(3)" ondragstart="return false;">Green</a>
+    <body>
+        <div class="content">
+            <form>
+                <a href="#" id="blue" class="button blue" onClick="changeCol(1)" ondragstart="return false;">Blue</a>
+                <a href="#" id="red" class="button red" onClick="changeCol(2)" ondragstart="return false;">Red</a>
+                <a href="#" id="green" class="button green" onClick="changeCol(3)" ondragstart="return false;">Green</a>
 
-            <a href="#" id="style1" class="button style1" onClick="changeStyle(1)" ondragstart="return false;">Style1</a>
-            <a href="#" id="style2" class="button style2" onClick="changeStyle(2)" ondragstart="return false;">Style2</a>
-        </form>
-        <div class="title">2048<div class="little">my</div></div>
-        <div class="board-ghost">
-            <div class="field-ghost">
-                <div class="table-row-ghost">
-                    <div class="td-ghost"></div>
-                    <div class="td-ghost"></div>
-                    <div class="td-ghost"></div>
-                    <div class="td-ghost"></div>
-                </div>
-                <div class="table-row-ghost">
-                    <div class="td-ghost"></div>
-                    <div class="td-ghost"></div>
-                    <div class="td-ghost"></div>
-                    <div class="td-ghost"></div>
-                </div>
-                <div class="table-row-ghost">
-                    <div class="td-ghost"></div>
-                    <div class="td-ghost"></div>
-                    <div class="td-ghost"></div>
-                    <div class="td-ghost"></div>
-                </div>
-                <div class="table-row-ghost">
-                    <div class="td-ghost"></div>
-                    <div class="td-ghost"></div>
-                    <div class="td-ghost"></div>
-                    <div class="td-ghost"></div>
+                <a href="#" id="style1" class="button style1" onClick="changeStyle(1)" ondragstart="return false;">Style1</a>
+                <a href="#" id="style2" class="button style2" onClick="changeStyle(2)" ondragstart="return false;">Style2</a>
+            </form>
+            <div class="title">2048
+                <div class="little">my</div>
+            </div>
+            <div class="board-ghost">
+                <div class="field-ghost">
+                    <div class="table-row-ghost">
+                        <div class="td-ghost"></div>
+                        <div class="td-ghost"></div>
+                        <div class="td-ghost"></div>
+                        <div class="td-ghost"></div>
+                    </div>
+                    <div class="table-row-ghost">
+                        <div class="td-ghost"></div>
+                        <div class="td-ghost"></div>
+                        <div class="td-ghost"></div>
+                        <div class="td-ghost"></div>
+                    </div>
+                    <div class="table-row-ghost">
+                        <div class="td-ghost"></div>
+                        <div class="td-ghost"></div>
+                        <div class="td-ghost"></div>
+                        <div class="td-ghost"></div>
+                    </div>
+                    <div class="table-row-ghost">
+                        <div class="td-ghost"></div>
+                        <div class="td-ghost"></div>
+                        <div class="td-ghost"></div>
+                        <div class="td-ghost"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="board" id="board">
-            <div class="field">
+            <div class="board" id="board">
+                <div class="field">
+                </div>
+            </div>
+            <div class="board-go" id="board-go"></div>
+            <div class="alert-go" id="alert-go">
+                Game over!
+            </div>
+            <div class="buttons-control">
+                <button class="button-reload" onClick="RestartGame()">
+                    <img src="assets/images/reload-17px-white.png" class="rel-icon">
+                    Restart
+                </button>
+                <button class="button-prev" onclick="undoAct()">
+                    Undo &#8617;
+                </button>
             </div>
         </div>
-        <div class="board-go" id="board-go"></div>
-        <div class="alert-go" id="alert-go">
-            Game over!
-        </div>
-        <div class="buttons-control">
-            <button class="button-reload" onClick="RestartGame()">
-                <img src="assets/images/reload-17px-white.png" class="rel-icon">
-                Restart
-            </button>
-            <button class="button-prev" onclick="undoAct()">
-                Undo &#8617;
-            </button>
-        </div>
-    </div>
-</body>
+    </body>
 
-<script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="main.js"></script>
 
 </html>
