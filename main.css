@@ -442,18 +442,25 @@ button, button:active {
 .button-reload {
     background: lightgray;
     margin: 2px 0 0 -140px;
+    border-radius: 10px;
+    padding-left: 18px;
+}
+
+.button-reload > img {
+    margin-left: 8px;
 }
 
 .button-prev {
     background: lightgray;
     margin: 2px 0 0 2px;
-    padding-right: 15px;
-    opacity: 0.3;
+    padding-right: 10px;
+    opacity: 0.8;
+    border-radius: 10px;
 }
 
 .button-prev:hover {
-    padding-right: 15px;
-    opacity: 0.3;
+    padding-right: 10px;
+    opacity: 0.8;
 }
 
 button:hover .rel-icon {

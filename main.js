@@ -6,9 +6,11 @@ var linkBoard = document.getElementById("board");
 function Box(gen, i, j, val) {
     this.mid = idGen + "";
     ++idGen;
+
     this.x = j;
     this.y = i;
     this.value = 0;
+
     if (!gen) {
         if (Math.random() > 0.7)
             this.value = 4;
@@ -36,7 +38,7 @@ function Box(gen, i, j, val) {
     linkBoard.appendChild(newItem);
 
     this.link = document.getElementById(this.mid);
-    /*animation*/
+
     this.mupdate = function (nx, ny) {
         this.link.classList.remove("t" + (this.x + 1) + "" + (this.y + 1));
         this.link.classList.add("t" + (nx + 1) + "" + (ny + 1));
@@ -62,6 +64,16 @@ function Box(gen, i, j, val) {
     return this;
 }
 
+function cacheState() {
+    prevBoxes = [];
+    for (var i = 0; i < 4; ++i) {
+        for (var j = 0; j < 4; ++j)
+            if (linkBoxes[i][j]) {
+                prevBoxes.push([i, j, linkBoxes[i][j].value]);
+            }
+    }
+}
+
 function turnAppear(val) {
     do {
         i = Math.round(Math.random() * 3);
@@ -79,14 +91,13 @@ function handleVert(si, fi, di) {
     for (var j = 0; j < 4; ++j) {
         var lasti = undefined, lastei = undefined;
         for (var i = si; i != fi; i += di) {
-            if (lastei == undefined && linkBoxes[i][j] && ( lasti == undefined || linkBoxes[i][j].value != linkBoxes[lasti][j].value )) //(1)
+            if (lastei == undefined && linkBoxes[i][j] && ( lasti == undefined || linkBoxes[i][j].value != linkBoxes[lasti][j].value ))
                 lasti = i;
-            else if (lastei == undefined && !linkBoxes[i][j]) //(2)
+            else if (lastei == undefined && !linkBoxes[i][j])
                 lastei = i;
-            else if (lasti != undefined && linkBoxes[i][j] && linkBoxes[lasti][j].value == linkBoxes[i][j].value) { //(3)
+            else if (lasti != undefined && linkBoxes[i][j] && linkBoxes[lasti][j].value == linkBoxes[i][j].value) {
                 if( !something )
-                    prevBoxes = jQuery.extend(true, {}, linkBoxes ) ;
-
+                    cacheState();
                 boxes.splice(boxes.indexOf(linkBoxes[lasti][j]), 1);
                 linkBoxes[lasti][j].mdelete();
                 delete linkBoxes[lasti][j];
@@ -99,10 +110,9 @@ function handleVert(si, fi, di) {
                 lasti = undefined;
                 something = 1;
             }
-            else if (lastei != undefined && linkBoxes[i][j]) { //4
+            else if (lastei != undefined && linkBoxes[i][j]) { 
                 if( !something )
-                    prevBoxes = jQuery.extend(true, {}, linkBoxes ) ;
-
+                    cacheState();
                 linkBoxes[i][j].mupdate(j, lastei);
                 linkBoxes[lastei][j] = linkBoxes[i][j];
                 delete linkBoxes[i][j];
@@ -128,8 +138,7 @@ function handleHoriz(sj, fj, dj) {
                 lastej = j;
             else if (lastj != undefined && linkBoxes[i][j] && linkBoxes[i][lastj].value == linkBoxes[i][j].value) { //(3)
                 if( !something )
-                    prevBoxes = jQuery.extend(true, {}, linkBoxes ) ;
-
+                    cacheState();
                 boxes.splice(boxes.indexOf(linkBoxes[i][lastj]), 1);
                 linkBoxes[i][lastj].mdelete();
                 delete linkBoxes[i][lastj];
@@ -144,8 +153,7 @@ function handleHoriz(sj, fj, dj) {
             }
             else if (lastej != undefined && linkBoxes[i][j]) { //4
                 if( !something )
-                    prevBoxes = jQuery.extend(true, {}, linkBoxes ) ;
-
+                    cacheState();
                 linkBoxes[i][j].mupdate(lastej, i);
                 linkBoxes[i][lastej] = linkBoxes[i][j];
                 delete linkBoxes[i][j];
@@ -210,8 +218,24 @@ function setKeysHandle() {
 }
 
 function undoAct() {
-    //if( prevBoxes != undefined )
-    //    linkBoxes = jQuery.extend(true, {}, prevBoxes ) ;
+    if (prevBoxes != undefined) {
+        for (var i = 0; i < 4; ++i)
+            for (var j = 0; j < 4; ++j)
+                if (linkBoxes[i][j]) {
+                    linkBoxes[i][j].mdelete();
+                    delete linkBoxes[i][j];
+                }
+        boxes = new Array(0);
+        for (var i = 0; i < prevBoxes.length; ++i) {
+            boxes.push(new Box(1, prevBoxes[i][0], prevBoxes[i][1], prevBoxes[i][2]));
+            linkBoxes[prevBoxes[i][0]][prevBoxes[i][1]] = boxes[boxes.length - 1];
+        }
+        prevBoxes = undefined;
+
+        setKeysHandle();
+        document.getElementById("board-go").style.display = "none";
+        document.getElementById("alert-go").style.display = "none";
+    }
 }
 
 function checkGameOver() {
@@ -230,7 +254,7 @@ function gameOver() {
     document.getElementById("alert-go").style.display = "block";
 }
 
-function RestartGame() {
+function restartGame() {
     prevBoxes = undefined;
     while (boxes.length) {
         boxes[0].mdelete();
@@ -251,4 +275,4 @@ function RestartGame() {
 
 changeStyle(remStyle);
 changeCol(remState);
-RestartGame();
+restartGame();
