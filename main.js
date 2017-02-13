@@ -164,11 +164,11 @@ function changeCol(state) {
     for (i = 0; i < boxes.length; ++i) {
         var logval = boxes[i].value ? Math.log(boxes[i].value) / Math.log(2) : 0;
         if (state == 1)
-            this.link.style.background = "rgb(" + (248 - 12 * logval) + "," + (248 - 12 * logval) + "," + (logval > 5 ? 248 - 12 * (logval - 5) : 248) + ")";
+            boxes[i].link.style.background = "rgb(" + (248 - 12 * logval) + "," + (248 - 12 * logval) + "," + (logval > 5 ? 248 - 12 * (logval - 5) : 248) + ")";
         else if (state == 2)
-            this.link.style.background = "rgb(" + (logval > 5 ? 248 - 4 * (logval - 5) : 248) + "," + (248 - 4 * logval) + "," + (logval ? 248 - 16 * logval : 248) + ")";
+            boxes[i].link.style.background = "rgb(" + (logval > 5 ? 248 - 4 * (logval - 5) : 248) + "," + (248 - 4 * logval) + "," + (logval ? 248 - 16 * logval : 248) + ")";
         else if (state == 3)
-            this.link.style.background = "rgb(" + (248 - 8 * logval) + "," + (logval > 5 ? 248 - 8 * (logval - 5) : 248) + "," + (248 - 16 * logval) + ")";
+            boxes[i].link.style.background = "rgb(" + (248 - 8 * logval) + "," + (logval > 5 ? 248 - 8 * (logval - 5) : 248) + "," + (248 - 16 * logval) + ")";
     }
     if (state == 1) {
         document.body.style.backgroundColor = "lightblue";
@@ -186,16 +186,12 @@ function changeCol(state) {
 function changeStyle(state) {
     remStyle = state;
     if (state == 1) {
-        document.body.style.background = "url('assets/images/background-bluelines-small.png') 0 0 repeat";
-        document.body.style.backgroundSize = "400px 400px";
-        //document.body.style.backgroundPosition="15px 0,15px 0,0 0, 0 0" ;
-        //document.body.style.backgroundSize="30px 20px" ;
+        document.body.style.backgroundPosition="15px 0,15px 0,0 0, 0 0" ;
+        document.body.style.backgroundSize="30px 20px" ;
     }
     else if (state == 2) {
-        document.body.style.background = "url('assets/images/background-bluesquares-small.png') 0 0 repeat";
-        document.body.style.backgroundSize = "500px 500px";
-        //document.body.style.backgroundPosition="0 0" ;
-        //document.body.style.backgroundSize="10px 10px" ;
+        document.body.style.backgroundPosition="0 0" ;
+        document.body.style.backgroundSize="10px 10px" ;
     }
 }
 
